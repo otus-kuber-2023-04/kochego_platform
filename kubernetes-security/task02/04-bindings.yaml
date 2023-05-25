@@ -1,0 +1,12 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding                              # Cluster-wide
+metadata:
+  name: read-pods-prometheus                          # под этим именем мы потом увидим этот RoleBinding
+subjects:
+- kind: Group                                         # Group, ServiceAccount
+  name: system:serviceaccounts:prometheus             # all service accounts in namespace prometheus
+  namespace: prometheus
+roleRef:
+  kind: ClusterRole                                   # явно указываем Role или ClusterRole
+  name: read-pods                                     # а тут имя той Role или ClusterRole к которой мы биндимся
+  apiGroup: rbac.authorization.k8s.io
