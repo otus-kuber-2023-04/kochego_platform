@@ -1,39 +1,17 @@
 # kochego_platform
 kochego Platform repository
 
-# ДЗ № 1. Знакомство с Kubernetes, основные понятия и архитектура
+# ДЗ №6. Мониторинг компонентов кластера и приложений, работающих в нем
 
-- Поднят minikube в локальном окружении (wsl), доставлен dashboard, k9s
-- Проверена его работоспособность и отказоустойчивость (при удалении всех подов в namespace kube-system они восстанавливаются)
-- Написан Dockerfile для запуска простейшего веб сервера на основе nginx и из него собран образ и запушен в Dockerhub
-- Написан манифест для создания пода на основе образа веб сервера созданного ранее и успешно применен в кластер. Для приложения пробросила порты и убедилась, что оно работает
-- Собран образ для frontend микросервиса для приложения hipster shop и запушен в Dockerhub
-- Запущен под для frontend микросервиса в ad-hoc режиме и сгенерирован манифест, после применения данного манифеста под запускается с ошибками
-- После анализа логов поправлен манифест и под запущен без ошибок (добавлены переменные)
-
-# ДЗ №2. Механика запуска и взаимодействия контейнеров в Kubernetes
-
-- Развернут кластер kind, проверена его работоспособность
-- **frontend-replicaset.yaml** Поднят под для frontend модуля приложения hipster shop при помощи контроллера ReplicaSet, количество реплик доведено до 3
-- Обновлен и применен манифест для frontend типа ReplicaSet с использованием новой версии образа. После применения запущенные поды не обновились (не изменилась версия образа), поскольку ReplicaSet контролирует только количество запущенных экземпляров подов. Если удалить все поды, то они пересоздадутся уже с новой версией образа.
-- **paymentservice-replicaset.yaml** Написан и применен манифест для paymentService модуля приложения hipster shop при помощи контроллера ReplicaSet. 
-- **paymentservice-deployment.yaml** Затем этот манифест переписан под создание при помощи контроллера Deployment. Данный контроллер помимо сущности Deployment создал нам ReplicaSet и поднял необходимое количество подов.
-- Проверен сценарий отката деплоймента
-- **paymentservice-deployment-bg.yaml && paymentservice-deployment-reverse.yaml** Для paymentService реализованы стратегии blue-green deployment и Reverse Rolling Update путем настройки параметров maxSurge и maxUnavailable
-- **frontend-deployment.yaml** Для frontend написан Deployment манифест, дописана readinessProbe и проверена ее работа
-- Создан манифест для развертывания Prometheus Node Exporter при помощи контроллера DaemonSet. В результате применения было поднято по одному поду на каждой worker ноде кластера. Проброшен порт и проверена работоспособность
-- **node-exporter-daemonset.yaml** Модифицирован манифест, чтобы Node Exporter был развернут не только на worker, но и на control-plane нодах.
-
-# ДЗ №3. Сетевая подсистема Kubernetes
-
-- **web-pod.yaml** Модифицирован манифест по созданию пода для веб сервера - добавлены проверки readinessProbe и livenessProbe, проверена их работоспособность
-- **web-deploy.yaml** Создан манифест деплоймента для веб сервера с корректными пробами, проведен деплой с использованием различных стратегий (меняла версию образа busybox, чтобы помониторить разные стратегии деплоя)
-- **web-svc-cip.yaml** Создан сервис типа ClusterIP для подключения к подам созданным ранее при помощи деплоймент манифеста, проверен доступ к странице веб сервера по CLUSTER-IP изнутри кластера
-- В minikube для kube-proxy включен режим IPVS
-- В minikube установлен MetalLB (использовалась инструкция с оф.сайта с последней версией манифеста и metallb-config.yaml для назначения пула адресов)
-- **web-svc-lb.yaml** Создан сервис типа LoadBalancer, проверено что назначился EXTERNAL-IP, добавлен маршрут и проверен доступ к странице веб сервера по EXTERNAL-IP извне кластера
-- **coredns/coredns-svc-lb.yaml** Создан сервис типа LoadBalancer для доступа к CoreDNS извне кластера, проверно что запросы к CoreDNS проходят
-- **nginx-lb.yaml** Создан и запущен ingress-controller
-- **web-ingress.yaml** Создано правило ingress, проверен доступ к странице веб сервера по Ingress EXTERNAL-IP и нужному префиксу извне кластера
-- **dashboard/dashboard-ingress.yaml** Создано правило ingress для kubernetes-dashboard, проверен доступ к дэшборду через ingress
-- **canary/*.yaml** Реализован canary deployment с помощью ingress - при передаче заголовка test: canary запрос идет на под с "канареечным" сайтом
+- **./kubernetes-monitoring/web/** Создан кастомный образ Nginx, который умеет отдавать свои метрики по пути /basic_status и запушен в докерхаб
+- **./kubernetes-monitoring/nginx-deploy.yaml** Создан деплоймент и сервис для Nginx на основе этого образа в кластере minikube
+```bash
+kubectl apply -f ./kubernetes-monitoring/nginx-deploy.yaml
+```
+- **./kubernetes-monitoring/nginx-exporter-deploy.yaml** Создан деплоймент и сервис для prometheus Nginx exporter, который собирает метрики с Nginx и преобразовывает их в prometheus формат, после преобразования они доступны по пути /metrics
+```bash
+kubectl apply -f ./kubernetes-monitoring/nginx-exporter-deploy.yaml
+```
+- Установлен prometheus-operator при помощи манифеста из официального репозитория
+- **./kubernetes-monitoring/service-monitor.yaml** Создан service monitor для Nginx
+- **./kubernetes-monitoring/grafana.yaml** Поднята Grafana при помощи инструкции с официального сайта. Дэшборд не нарисовала, поскольку работала в терминале
