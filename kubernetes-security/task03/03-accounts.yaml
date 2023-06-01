@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  namespace: dev
+  name: jane
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  namespace: dev
+  name: ken
