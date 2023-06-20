@@ -14,3 +14,5 @@ kochego Platform repository
 [ДЗ №6. Мониторинг компонентов кластера и приложений, работающих в нем](docs/hw-6-kubernetes-monitoring.md)
 
 [ДЗ №7. Custom Resource Definitions. Operators](docs/hw-7-kubernetes-operators.md)
+
+[ДЗ №8. Шаблонизация манифестов. Helm и его аналоги (Jsonnet, Kustomize)](docs/hw-8-kubernetes-templating.md)

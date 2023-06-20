@@ -1,0 +1,10 @@
+apiVersion: qbec.io/v1alpha1
+kind: App
+metadata:
+  name: currencyservice
+spec:
+  environments:
+    default:
+      defaultNamespace: hipster-shop
+      server: https://51.250.70.192
+  vars: {}
