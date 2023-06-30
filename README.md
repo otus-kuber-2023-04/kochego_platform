@@ -16,3 +16,5 @@ kochego Platform repository
 [ДЗ №7. Custom Resource Definitions. Operators](docs/hw-7-kubernetes-operators.md)
 
 [ДЗ №8. Шаблонизация манифестов. Helm и его аналоги (Jsonnet, Kustomize)](docs/hw-8-kubernetes-templating.md)
+
+[ДЗ №9. Сервисы централизованного логирования для компонентов Kubernetes и приложений ](docs/hw-9-kubernetes-logging.md)

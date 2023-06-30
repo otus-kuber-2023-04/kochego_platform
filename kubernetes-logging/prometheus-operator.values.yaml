@@ -1,0 +1,113 @@
+prometheus:
+  prometheusSpec:
+    tolerations:
+    - key: node-role
+      operator: Equal
+      value: infra
+      effect: NoSchedule
+
+    nodeSelector:
+      yandex.cloud/node-group-id: catoophs0m0pr87nd3h0
+
+    serviceMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelectorNilUsesHelmValues: false
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/tls-acme: "true"
+      cert-manager.io/cluster-issuer: "letsencrypt-production"
+      cert-manager.io/acme-challenge-type: http01
+    ingressClassName: nginx
+    hosts:
+      - prometheus.kuber.kochego.online
+    paths:
+      - /
+    tls:
+      - secretName: prometheus.kuber.kochego.online
+        hosts:
+          - prometheus.kuber.kochego.online
+
+prometheusOperator:
+  tolerations:
+    - key: node-role
+      operator: Equal
+      value: infra
+      effect: NoSchedule
+  nodeSelector:
+    yandex.cloud/node-group-id: catoophs0m0pr87nd3h0
+
+prometheus-node-exporter:
+  tolerations:
+    - key: node-role
+      operator: Equal
+      value: infra
+      effect: NoSchedule
+  nodeSelector:
+    yandex.cloud/node-group-id: catoophs0m0pr87nd3h0
+
+kube-state-metrics:
+  tolerations:
+    - key: node-role
+      operator: Equal
+      value: infra
+      effect: NoSchedule
+  nodeSelector:
+    yandex.cloud/node-group-id: catoophs0m0pr87nd3h0
+
+alertmanager:
+  alertmanagerSpec:
+    tolerations:
+      - key: node-role
+        operator: Equal
+        value: infra
+        effect: NoSchedule
+    nodeSelector:
+      yandex.cloud/node-group-id: catoophs0m0pr87nd3h0
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/tls-acme: "true"
+      cert-manager.io/cluster-issuer: "letsencrypt-production"
+      cert-manager.io/acme-challenge-type: http01
+    ingressClassName: nginx
+    hosts:
+      - alertmanager.kuber.kochego.online
+    paths:
+      - /
+    tls:
+      - secretName: alertmanager.kuber.kochego.online
+        hosts:
+          - alertmanager.kuber.kochego.online
+
+grafana:
+  tolerations:
+    - key: node-role
+      operator: Equal
+      value: infra
+      effect: NoSchedule
+  nodeSelector:
+    yandex.cloud/node-group-id: catoophs0m0pr87nd3h0
+  enabled: true
+  defaultDashboardsEnabled: true
+  adminPassword: password
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/tls-acme: "true"
+      cert-manager.io/cluster-issuer: "letsencrypt-production"
+      cert-manager.io/acme-challenge-type: http01
+    ingressClassName: nginx
+    hosts:
+      - grafana.kuber.kochego.online
+    path: /
+    tls:
+      - secretName: grafana.kuber.kochego.online
+        hosts:
+          - grafana.kuber.kochego.online
+    additionalDataSources:
+    - name: Loki
+      type: loki
+      access: proxy
+      url: http://loki:3100
+      jsonData:
+        maxLines: 1000

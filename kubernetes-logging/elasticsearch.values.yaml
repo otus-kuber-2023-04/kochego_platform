@@ -1,0 +1,11 @@
+image: elasticsearch
+imageTag: 8.5.1
+
+tolerations:
+  - key: node-role
+    operator: Equal
+    value: infra
+    effect: NoSchedule
+
+nodeSelector:
+  yandex.cloud/node-group-id: catoophs0m0pr87nd3h0
