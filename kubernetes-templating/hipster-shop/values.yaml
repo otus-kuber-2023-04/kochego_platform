@@ -1,0 +1,18 @@
+redis:
+  architecture: standalone
+  image:
+    tag: 7.0.11
+  fullnameOverride: redis-cart
+  commonLabels:
+  app: redis-cart
+  master:
+    kind: Deployment
+    resources:
+      requests:
+        cpu: 70m
+        memory: 200Mi
+      limits:
+        memory: 256Mi
+        cpu: 125m
+  auth:
+    enabled: false
