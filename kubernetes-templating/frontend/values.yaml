@@ -11,3 +11,5 @@ service:
   targetPort: 8080
   type: NodePort
   nodePort: 30007
+
+host: shop.kuber.kochego.online

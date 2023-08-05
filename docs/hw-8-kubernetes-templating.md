@@ -48,7 +48,7 @@ helm upgrade --install cert-manager jetstack/cert-manager --wait \
 --namespace=cert-manager \
 --version=1.12.2
 ```
-Добавлены объекты ClusterIssuer, Certificate для certmanager
+Добавлены объект ClusterIssuer для certmanager
 ```bash
 kubectl apply -f kubernetes-templating/cert-manager/issuer.yaml
 ```
@@ -81,11 +81,11 @@ helm package kubernetes-templating/chartmuseum/hello-world-chart/
 ````
 Загрузим (для того, чтобы это получилось, необходимо включить API - настраивается через values)
 ```bash
-curl --data-binary "@hello-world-0.1.0.tgz" https://chartmuseum.158.160.42.122.nip.io/api/charts
+curl --data-binary "@hello-world-0.1.0.tgz" https://chartmuseum.kuber.kochego.online/api/charts
 ```
 Добавим развернутый ранее chartmuseum в качестве Helm репозитория
 ```bash
-helm repo add my-chartmuseum https://chartmuseum.158.160.42.122.nip.io/
+helm repo add my-chartmuseum https://chartmuseum.kuber.kochego.online/
 ```
 Поиск по репозиторию - увидим, что загруженный чарт появился (если нет, то стоит сделать helm repo update)
 ```bash
@@ -183,7 +183,7 @@ NodePort:                 http  31234/TCP
 
 ### Работа с helm-secrets
 Установлен плагин helm-secrets, создан секрет для kubernetes-templating/frontend и зашифрован с помощью PGP ключа
-Запущена установка модул frontend с использованием данного секрета
+Запущена установка модуля frontend с использованием данного секрета
 ```bash
 helm secrets upgrade --install frontend kubernetes-templating/frontend \
 --namespace hipster-shop  \
@@ -213,15 +213,15 @@ helm package kubernetes-templating/frontend/
 ```
 Авторизоваться и запушить чарты:
 ```bash
-helm registry login -u admin harbor.158.160.42.122.nip.io
-helm push hipster-shop-0.1.0.tgz oci://harbor.158.160.42.122.nip.io/hipster-shop
-helm push frontend-0.1.0.tgz oci://harbor.158.160.42.122.nip.io/hipster-shop
+helm registry login -u admin harbor.kuber.kochego.online
+helm push hipster-shop-0.1.0.tgz oci://harbor.kuber.kochego.online/hipster-shop
+helm push frontend-0.1.0.tgz oci://harbor.kuber.kochego.online/hipster-shop
 ```
 Начиная с версии 2.8.0 Harbor не поддерживает Chartmuseum и работа с чартами идет через oci модель.
 Для скачивания чартов используем:
 ```bash
-helm pull oci://harbor.158.160.42.122.nip.io/hipster-shop/frontend --version 0.1.0
-helm pull oci://harbor.158.160.42.122.nip.io/hipster-shop/hipster-shop --version 0.1.0
+helm pull oci://harbor.kuber.kochego.online/hipster-shop/frontend --version 0.1.0
+helm pull oci://harbor.kuber.kochego.online/hipster-shop/hipster-shop --version 0.1.0
 ```
 Для установки:
 ```bash
@@ -251,5 +251,5 @@ cd kubernetes-templating/jsonnet && qbec apply default
 kubectl apply -k kubernetes-templating/kustomize/overrides/dev/
 kubectl apply -k kubernetes-templating/kustomize/overrides/prod/
 ```
-По итогу проверила, что все объекты hipster-shop работают и приложение доступно https://shop.158.160.42.122.nip.io
+По итогу проверила, что все объекты hipster-shop работают и приложение доступно https://shop.kuber.kochego.online
 ![hw8-image9](./images/hw8-image9.PNG)

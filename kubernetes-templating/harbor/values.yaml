@@ -4,10 +4,10 @@ expose:
     enabled: true
     certSource: secret
     secret:
-      secretName: "harbor.158.160.42.122.nip.io.secret"
+      secretName: "harbor.kuber.kochego.online.secret"
   ingress:
     hosts:
-      core: harbor.158.160.42.122.nip.io
+      core: harbor.kuber.kochego.online
     controller: nginx
     annotations:
       kubernetes.io/ingress.class: nginx
@@ -19,7 +19,7 @@ expose:
       annotations: {}
       labels: {}
 
-externalURL: https://harbor.158.160.42.122.nip.io
+externalURL: https://harbor.kuber.kochego.online
 
 notary:
   enabled: false

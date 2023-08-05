@@ -6,5 +6,5 @@ spec:
   environments:
     default:
       defaultNamespace: hipster-shop
-      server: https://51.250.70.192
+      server: https://158.160.46.206
   vars: {}
