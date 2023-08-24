@@ -1,0 +1,9 @@
+es:
+  uri: https://elastic:bEghZ1CTMUTZOQ8l@elasticsearch-master:9200
+  all: true
+  cluster_settings: true
+  sslSkipVerify: true
+
+serviceMonitor:
+  enabled: true
+

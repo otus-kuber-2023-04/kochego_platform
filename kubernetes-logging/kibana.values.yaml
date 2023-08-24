@@ -1,0 +1,34 @@
+image: kibana
+imageTag: 8.5.1
+
+tolerations:
+  - key: node-role
+    operator: Equal
+    value: infra
+    effect: NoSchedule
+
+nodeSelector:
+  yandex.cloud/node-group-id: catoophs0m0pr87nd3h0
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
+    cert-manager.io/acme-challenge-type: http01
+  hosts:
+    - host: kibana.kuber.kochego.online
+      paths:
+        - path: /
+  tls:
+    - secretName: kibana-tls
+      hosts:
+        - kibana.kuber.kochego.online
+
+resources:
+  requests:
+    cpu: "500m"
+    memory: "1Gi"
+  limits:
+    cpu: "500m"
+    memory: "1Gi"
