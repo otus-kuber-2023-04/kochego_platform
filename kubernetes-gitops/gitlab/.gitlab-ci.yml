@@ -1,0 +1,213 @@
+image: docker:24.0.5
+
+variables:
+    CI_COMMIT_TAG: "v0.0.5"
+    REGISTRY_PATH: registry.gitlab.com/kochego/microservicesdemo
+
+stages:
+  - build
+  - deploy
+
+.script-before: &script-before
+#  - docker login -u $DOCKERHUB_USER -p $DOCKERHUB_TOKEN
+  - docker login registry.gitlab.com -u $GITLAB_USER -p $GITLAB_TOKEN
+
+.script-build: &script-build
+  - docker build --build-arg BUILDKIT_INLINE_CACHE=1 --tag "$REGISTRY_PATH:$MICROSERVICE_NAME-$CI_COMMIT_TAG" src/$MICROSERVICE_NAME
+
+.script-build-cart: &script-build-cart
+  - docker build --build-arg BUILDKIT_INLINE_CACHE=1 --tag "$REGISTRY_PATH:$MICROSERVICE_NAME-$CI_COMMIT_TAG" src/$MICROSERVICE_NAME/src
+
+.script-deploy: &script-deploy
+  - echo $MICROSERVICE_NAME-$CI_COMMIT_TAG
+  - docker push $REGISTRY_PATH:$MICROSERVICE_NAME-$CI_COMMIT_TAG
+
+build adservice:
+  stage: build
+  variables:
+    MICROSERVICE_NAME: "adservice"
+  script:
+    - *script-build
+
+deploy adservice:
+  stage: deploy
+  needs: ["build adservice"]
+  variables:
+    MICROSERVICE_NAME: "adservice"
+  before_script:
+    - *script-before
+  script:
+    - *script-deploy
+
+build cartservice:
+  stage: build
+  variables:
+    MICROSERVICE_NAME: "cartservice"
+  script:
+    - *script-build-cart
+
+deploy cartservice:
+  stage: deploy
+  needs: ["build cartservice"]
+  variables:
+    MICROSERVICE_NAME: "cartservice"
+  before_script:
+    - *script-before
+  script:
+    - *script-deploy
+
+build checkoutservice:
+  stage: build
+  variables:
+    MICROSERVICE_NAME: "checkoutservice"
+  script:
+    - *script-build
+
+deploy checkoutservice:
+  stage: deploy
+  needs: ["build checkoutservice"]
+  variables:
+    MICROSERVICE_NAME: "checkoutservice"
+  before_script:
+    - *script-before
+  script:
+    - *script-deploy
+
+build currencyservice:
+  stage: build
+  variables:
+    MICROSERVICE_NAME: "currencyservice"
+  script:
+    - *script-build
+
+deploy currencyservice:
+  stage: deploy
+  needs: ["build currencyservice"]
+  variables:
+    MICROSERVICE_NAME: "currencyservice"
+  before_script:
+    - *script-before
+  script:
+    - *script-deploy
+
+build emailservice:
+  stage: build
+  variables:
+    MICROSERVICE_NAME: "emailservice"
+  script:
+    - *script-build
+
+deploy emailservice:
+  stage: deploy
+  needs: ["build emailservice"]
+  variables:
+    MICROSERVICE_NAME: "emailservice"
+  before_script:
+    - *script-before
+  script:
+    - *script-deploy
+
+build frontend:
+  stage: build
+  variables:
+    MICROSERVICE_NAME: "frontend"
+  script:
+    - *script-build
+
+deploy frontend:
+  stage: deploy
+  needs: ["build frontend"]
+  variables:
+    MICROSERVICE_NAME: "frontend"
+  before_script:
+    - *script-before
+  script:
+    - *script-deploy
+
+build loadgenerator:
+  stage: build
+  variables:
+    MICROSERVICE_NAME: "loadgenerator"
+  script:
+    - *script-build
+
+deploy loadgenerator:
+  stage: deploy
+  needs: ["build loadgenerator"]
+  variables:
+    MICROSERVICE_NAME: "loadgenerator"
+  before_script:
+    - *script-before
+  script:
+    - *script-deploy
+
+build paymentservice:
+  stage: build
+  variables:
+    MICROSERVICE_NAME: "paymentservice"
+  script:
+    - *script-build
+
+deploy paymentservice:
+  stage: deploy
+  needs: ["build paymentservice"]
+  variables:
+    MICROSERVICE_NAME: "paymentservice"
+  before_script:
+    - *script-before
+  script:
+    - *script-deploy
+
+build productcatalogservice:
+  stage: build
+  variables:
+    MICROSERVICE_NAME: "productcatalogservice"
+  script:
+    - *script-build
+
+deploy productcatalogservice:
+  stage: deploy
+  needs: ["build productcatalogservice"]
+  variables:
+    MICROSERVICE_NAME: "productcatalogservice"
+  before_script:
+    - *script-before
+  script:
+    - *script-deploy
+
+build recommendationservice:
+  stage: build
+  variables:
+    MICROSERVICE_NAME: "recommendationservice"
+  script:
+    - *script-build
+
+deploy recommendationservice:
+  stage: deploy
+  needs: ["build recommendationservice"]
+  variables:
+    MICROSERVICE_NAME: "recommendationservice"
+  before_script:
+    - *script-before
+  script:
+    - *script-deploy
+
+build shippingservice:
+  stage: build
+  variables:
+    MICROSERVICE_NAME: "shippingservice"
+  script:
+    - *script-build
+
+deploy shippingservice:
+  stage: deploy
+  needs: ["build shippingservice"]
+  variables:
+    MICROSERVICE_NAME: "shippingservice"
+  before_script:
+    - *script-before
+  script:
+    - *script-deploy
+
+  tags:
+    - docker
