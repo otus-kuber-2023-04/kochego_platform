@@ -1,0 +1,10 @@
+{
+    "auths": {
+        "https://registry.gitlab.com":{
+            "username":"kochego",
+            "password":"glpat-F6gyw7wWKmspswsqUMqu",
+            "email":"olga.kolpakova@gmail.com",
+            "auth":"a29jaGVnbzpnbHBhdC1GNmd5dzd3V0ttc3Bzd3NxVU1xdQ=="
+    	}
+    }
+}
