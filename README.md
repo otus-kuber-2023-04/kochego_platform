@@ -17,6 +17,8 @@ kochego Platform repository
 
 [ДЗ №8. Шаблонизация манифестов. Helm и его аналоги (Jsonnet, Kustomize)](docs/hw-8-kubernetes-templating.md)
 
-[ДЗ №9. Сервисы централизованного логирования для компонентов Kubernetes и приложений ](docs/hw-9-kubernetes-logging.md)
+[ДЗ №9. Сервисы централизованного логирования для компонентов Kubernetes и приложений](docs/hw-9-kubernetes-logging.md)
 
-[ДЗ №10. GitOps и инструменты поставки ](docs/hw-10-kubernetes-gitops.md)
+[ДЗ №10. GitOps и инструменты поставки](docs/hw-10-kubernetes-gitops.md)
+
+[ДЗ №14. Подходы к развертыванию и обновлению production-grade кластера](docs/hw-14-kubernetes-production.md)
