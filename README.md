@@ -21,4 +21,8 @@ kochego Platform repository
 
 [ДЗ №10. GitOps и инструменты поставки](docs/hw-10-kubernetes-gitops.md)
 
+[ДЗ №12. Диагностика и отладка кластера и приложений в нем](docs/hw-12-kubernetes-debug.md)
+
+[ДЗ №13. CSI. Обзор подсистем хранения данных в Kubernetes](docs/hw-13-kubernetes-storage.md)
+
 [ДЗ №14. Подходы к развертыванию и обновлению production-grade кластера](docs/hw-14-kubernetes-production.md)
