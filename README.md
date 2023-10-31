@@ -23,4 +23,8 @@ kochego Platform repository
 
 [ДЗ №11. Хранилище секретов для приложений. Vault](docs/hw-11-kubernetes-vault.md)
 
+[ДЗ №12. Диагностика и отладка кластера и приложений в нем](docs/hw-12-kubernetes-debug.md)
+
+[ДЗ №13. CSI. Обзор подсистем хранения данных в Kubernetes](docs/hw-13-kubernetes-storage.md)
+
 [ДЗ №14. Подходы к развертыванию и обновлению production-grade кластера](docs/hw-14-kubernetes-production.md)
